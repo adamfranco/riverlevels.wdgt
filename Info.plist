@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC 
+  "-//Apple Computer//DTD PLIST 1.0//EN"
+	"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllowFullAccess</key>
+	<false/>
+	<key>AllowNetworkAccess</key>
+	<true/>
+	<key>AllowMultipleInstances</key>
+	<true/>
+	<key>CFBundleIdentifier</key>
+	<string>com.adamfranco.widget.RiverLevels</string>
+	<key>CFBundleName</key>
+	<string>RiverLevels</string>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+	<key>MainHTML</key>
+	<string>RiverLevels.html</string>
+	<key>DefaultImage</key>
+	<string>Default</string>
+</dict>
+</plist>

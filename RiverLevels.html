@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>River Levels</title>
+		
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+		
+		<link rel='stylesheet' type='text/css' href='library/style.css'/>
+		
+		<script type='text/javascript' src='library/functions.js'/>
+		<script type='text/javascript' src='library/main.js'/>
+		<script type='text/javascript' src='file:///System/Library/WidgetResources/button/genericButton.js' />
+
+	</head>
+	<body onload='init()'>
+		<div id="front" onmousemove='mousemove(event);' onmouseout='mouseexit(event);'>
+			<div id='stationPageLink' onclick="openPage()"></div>
+			<div id='graphContainer'>
+				<img id='levelsgraph' src='images/usgs.png' width='388px' height='321px'/>
+			</div>
+			<div class="flip" id="fliprollie"></div>
+			<div class="flip" id="flip" onclick='exitflip(event); showPrefs(event);' onmouseover='enterflip(event);' onmouseout='exitflip(event)'></div>
+		</div>
+		<div id="back">
+			<div id="stateList"></div>
+			<div id="stationList">
+				<select id='stationId'>
+					<option value=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+				</select>
+			</div>
+			<img id='levelsgraphThumb' src='images/usgs.png' width='175px' height='145px'/>
+			<div id="updateIntervalList"></div>
+			<div id='done'></div>
+			<div id='lastUpdate'>Last Update: Never</div>
+			<div id='nextUpdate'>Next Update: Unknown</div>
+			<div id='about'>
+				<strong>River Levels</strong> 0.1
+				<br/>by Adam Franco
+				<br/><a href='#' onclick="widget.openURL('http://www.adamfranco.com/');">www.adamfranco.com</a>
+			</div>
+		</div>
+	</body>
+</html>

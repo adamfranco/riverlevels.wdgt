@@ -1,0 +1,104 @@
+body {
+	background: url(../Default.png) no-repeat top left;
+	/*background-color: #dfd;*/
+	
+	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	width: 400px;
+	height: 331px;
+}
+
+#front,#back {
+	width: 380px;
+	height: 311px;
+	position: relative;
+	/*border: 1px solid;*/
+}
+
+#front {
+	display: block;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#graphContainer {
+	position: relative;
+	top: 5;
+	left: 5;
+	width: 375px;
+	height: 301px;
+	z-index: 10;
+	overflow: hidden;
+	/*border: 1px solid;*/
+}
+#levelsgraph {
+	position: absolute;
+	top: -5;
+	left: -5;
+	z-index: 10;
+}
+
+#back {
+	text-align: center;
+	display: none;
+	padding: 10px;
+}
+
+#about {
+	margin-top: 10px;
+}
+
+#done {
+    position:absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: #aaa;
+}
+
+.flip {
+	position:absolute;
+	bottom: 3px;
+	right: 3px;
+	width: 13px;
+	height: 13px;
+}
+
+#flip {
+	visibility: hidden;
+	opacity: 0.95;
+	background: url(file:///System/Library/WidgetResources/ibutton/black_i.png) no-repeat top left;
+	z-index:8000;
+}
+
+
+#fliprollie {
+	visibility: hidden;
+	opacity: 0.3;
+	background: url(file:///System/Library/WidgetResources/ibutton/black_rollie.png) no-repeat top left;
+	z-index: 7999;
+}
+
+
+#lastUpdate,#nextUpdate {
+	font-size: 9px;
+	display: block;
+}
+
+#stationPageLink {
+	z-index: 25;
+	opacity: 0;
+	background-color: #00F;
+	
+	position: absolute;
+	top: 24px;
+	left: 5px;
+	height: 25px;
+	width: 375px;
+	
+	visibility: hidden;
+}
+
+#stationPageLink:hover {
+	opacity: 0.2;
+	cursor: pointer;
+}
