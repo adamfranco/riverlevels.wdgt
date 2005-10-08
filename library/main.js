@@ -138,7 +138,7 @@ function init() {
 	printStateList();
 	printUpdateOptions();
 	var doneButton = document.getElementById("done");
-    createGenericButton(doneButton, "Done", hidePrefs);
+    createGenericButton(doneButton, "Done", showFront);
 }
 
 function setLoadTimer() {
@@ -397,14 +397,14 @@ Date.prototype.subtractDays = function (num) {
 }
 
 
-
-function mousemove(event) {
-	document.getElementById('flip').style.visibility = "visible";
-}
-
-function mouseexit(event) {
-	document.getElementById('flip').style.visibility = "hidden";
-}
+// 
+// function mousemove(event) {
+// 	document.getElementById('flip').style.visibility = "visible";
+// }
+// 
+// function mouseexit(event) {
+// 	document.getElementById('flip').style.visibility = "hidden";
+// }
 
 function enterflip(event) {
 	document.getElementById('fliprollie').style.visibility = "visible";
@@ -414,7 +414,7 @@ function exitflip(event) {
 	document.getElementById('fliprollie').style.visibility = "hidden";
 }
 
-function showPrefs(event) {
+function showBack(event) {
 	var front = document.getElementById("front");
     var back = document.getElementById("back");
     
@@ -429,7 +429,7 @@ function showPrefs(event) {
 		setTimeout ('widget.performTransition();', 0);
 }
 
-function hidePrefs(event) {
+function showFront(event) {
 	var front = document.getElementById("front");
     var back = document.getElementById("back");
     

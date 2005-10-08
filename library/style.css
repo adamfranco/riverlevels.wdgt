@@ -62,8 +62,7 @@ body {
 }
 
 #flip {
-	visibility: hidden;
-	opacity: 0.95;
+	opacity: 0;
 	background: url(file:///System/Library/WidgetResources/ibutton/black_i.png) no-repeat top left;
 	z-index:8000;
 }

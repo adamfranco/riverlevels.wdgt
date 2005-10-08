@@ -8,6 +8,7 @@
 		
 		<script type='text/javascript' src='library/functions.js'/>
 		<script type='text/javascript' src='library/main.js'/>
+		<script type='text/javascript' src='library/flip.js'/>
 		<script type='text/javascript' src='file:///System/Library/WidgetResources/button/genericButton.js' />
 
 	</head>
@@ -17,8 +18,8 @@
 			<div id='graphContainer'>
 				<img id='levelsgraph' src='images/usgs.png' width='388px' height='321px'/>
 			</div>
-			<div class="flip" id="fliprollie"></div>
-			<div class="flip" id="flip" onclick='exitflip(event); showPrefs(event);' onmouseover='enterflip(event);' onmouseout='exitflip(event)'></div>
+			<div class='flip' id='flip' onclick='showBack(event);' onmouseover='enterflip(event);' onmouseout='exitflip(event);'></div>
+			<div class='flip' id='fliprollie'></div>
 		</div>
 		<div id="back">
 			<div id="stateList"></div>
