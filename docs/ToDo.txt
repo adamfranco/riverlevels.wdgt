@@ -1,6 +1,4 @@
 Todo:
-	README
-	LICENSE
 	comment/clean up
 	make sure it is really refreshing
 	Nicer icon
