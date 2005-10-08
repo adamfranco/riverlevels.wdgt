@@ -184,7 +184,7 @@ function loadDischargeImage() {
 	setLoadTimer();
 	
 	document.getElementById('stationPageLink').style.visibility = "hidden";
-	document.getElementById('levelsgraph').src = "images/loading.png";
+	document.getElementById('levelsgraph').src = "images/loading_front.png";
 	document.getElementById('levelsgraphThumb').src = "images/loading.png";
 	loadImage("00060");
 }
@@ -395,16 +395,6 @@ Date.prototype.subtractDays = function (num) {
 	// current milliseconds - num days * hr * mn * sc * milsc
 	this.setTime(this.getTime() - (num * 24 * 60 * 60 * 1000));
 }
-
-
-// 
-// function mousemove(event) {
-// 	document.getElementById('flip').style.visibility = "visible";
-// }
-// 
-// function mouseexit(event) {
-// 	document.getElementById('flip').style.visibility = "hidden";
-// }
 
 function enterflip(event) {
 	document.getElementById('fliprollie').style.visibility = "visible";

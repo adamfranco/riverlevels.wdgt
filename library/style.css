@@ -4,12 +4,12 @@ body {
 	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
 	font-size: 10px;
 	width: 400px;
-	height: 331px;
+	height: 320px;
 }
 
 #front,#back {
 	width: 380px;
-	height: 311px;
+	height: 290px;
 	position: relative;
 	/*border: 1px solid;*/
 }
@@ -25,7 +25,7 @@ body {
 	top: 5;
 	left: 5;
 	width: 375px;
-	height: 301px;
+	height: 280px;
 	z-index: 10;
 	overflow: hidden;
 	/*border: 1px solid;*/
@@ -49,13 +49,13 @@ body {
 
 #done {
     position:absolute;
-    right: 20px;
-    bottom: 20px;
+    right: 22px;
+    bottom: 25px;
 }
 
 .flip {
 	position:absolute;
-	bottom: 3px;
+	bottom: 5px;
 	right: 3px;
 	width: 13px;
 	height: 13px;
