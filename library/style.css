@@ -1,6 +1,5 @@
 body {
 	background: url(../Default.png) no-repeat top left;
-	/*background-color: #dfd;*/
 	
 	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -52,7 +51,6 @@ body {
     position:absolute;
     right: 20px;
     bottom: 20px;
-    background-color: #aaa;
 }
 
 .flip {

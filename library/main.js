@@ -423,6 +423,7 @@ function showPrefs(event) {
 		
 	front.style.display = "none";
 	back.style.display = "block";
+	document.body.style.backgroundImage = "url(images/Back.png)";
 	
 	if (window.widget)
 		setTimeout ('widget.performTransition();', 0);
@@ -437,6 +438,7 @@ function hidePrefs(event) {
 		
 	front.style.display = "block";
 	back.style.display = "none";
+	document.body.style.backgroundImage = "url(Default.png)";
 	
 	if (window.widget)
 		setTimeout ('widget.performTransition();', 0);
