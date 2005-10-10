@@ -414,6 +414,7 @@ function showBack(event) {
 	front.style.display = "none";
 	back.style.display = "block";
 	document.body.style.backgroundImage = "url(images/Back.png)";
+	document.getElementById('fliprollie').style.visibility = "hidden";
 	
 	if (window.widget)
 		setTimeout ('widget.performTransition();', 0);
