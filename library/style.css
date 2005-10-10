@@ -61,6 +61,20 @@ body {
 	margin-top: 10px;
 }
 
+.pagelink {
+	color: #8888ff;
+	text-decoration: underline;
+}
+
+.pagelink:hover {
+	color: #6666ff;
+	cursor: pointer;
+}
+
+.title {
+	font-size: 16px;
+}
+
 #updateIntervalList {
 	display: inline;
 }
