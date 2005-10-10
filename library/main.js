@@ -215,6 +215,9 @@ function loadImage(parameterCode) {
 	if (document.getElementById('stationId').value != null) {
 		var stationId = document.getElementById('stationId').value;
 		
+		// Make sure that our refresh button is working if we have a stationId
+		document.getElementById('refresh').disabled = false;
+		
 		
 		// Fist need to load the "presentation graph" page in order for that
 		// to trigger the server creating (and caching) the image, since
@@ -253,6 +256,10 @@ function loadImage(parameterCode) {
 				
 		req.open("GET", url, true);
 		req.send(null);
+	} else {
+		// Make sure that our refresh button is not working if we don't 
+		// have a stationId
+		document.getElementById('refresh').disabled = true;
 	}
 }
 
