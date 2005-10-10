@@ -1,3 +1,15 @@
+/**
+ * This file defines arrays of US states.
+ * 
+ * @copyright Copyright &copy; 2005, Adam Franco
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License (GPL)
+ *
+ * @package waterwidgets.riverlevels
+ * @url http://waterwidgets.sourceforge.net
+ *
+ * @version $Id$
+ */ 
+
 var statesLong = new Array (
 					'Alabama',
 					'Alaska',

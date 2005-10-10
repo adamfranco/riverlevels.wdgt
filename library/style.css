@@ -1,3 +1,15 @@
+/**
+ * This is the main css file
+ * 
+ * @copyright Copyright &copy; 2005, Adam Franco
+ * @license http://www.gnu.org/copyleft/gpl.html GNU General Public License (GPL)
+ *
+ * @package waterwidgets.riverlevels
+ * @url http://waterwidgets.sourceforge.net
+ *
+ * @version $Id$
+ */ 
+
 body {
 	background: url(../Default.png) no-repeat top left;
 	

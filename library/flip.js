@@ -8,6 +8,9 @@
  * Copyright 2005 Apple Computer, Inc
  * License: unknown
  */
+ 
+ 
+ 
 var flipShown = false;
 var animation = {duration:0, starttime:0, to:1.0, now:0.0, from:0.0, firstElement:null, timer:null};
 function mousemove (event)
