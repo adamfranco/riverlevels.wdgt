@@ -6,6 +6,7 @@
 		
 		<link rel='stylesheet' type='text/css' href='library/style.css'/>
 		
+		<script type='text/javascript' src='library/states.js'/>
 		<script type='text/javascript' src='library/functions.js'/>
 		<script type='text/javascript' src='library/main.js'/>
 		<script type='text/javascript' src='library/flip.js'/>
@@ -14,6 +15,7 @@
 	</head>
 	<body onload='init()'>
 		<div id="front" onmousemove='mousemove(event);' onmouseout='mouseexit(event);'>
+			<div id='loaderror_front' class='error'>Error refreshing graph. Cached data is displayed.</div>
 			<div id='stationPageLink' onclick="openPage()"></div>
 			<div id='graphContainer'>
 				<img id='levelsgraph' src='images/usgs_front.png' width='388px' height='321px'/>
@@ -28,8 +30,9 @@
 					<option value=''>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
 				</select>
 			</div>
+			<div id='loaderror_back' class='error'>Error refreshing graph. Cached data is displayed.</div>
 			<img id='levelsgraphThumb' src='images/usgs.png' width='150px' height='124px'/>
-			<br/><input type='button' id='refresh' value='Refresh' onclick='loadDischargeImage()' disabled='disabled'/>
+			<br/><input type='button' id='refresh' value='Refresh' onclick='loadGraph()' disabled='disabled'/>
 			every <div id="updateIntervalList"></div>
 			<div id='done'></div>
 			<div id='lastUpdate'>Last Update: Never</div>

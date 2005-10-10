@@ -1,153 +1,105 @@
-var statesLong = new Array (
-					'Alabama',
-					'Alaska',
-					'Arizona',
-					'Arkansas',
-					'California',
-					'Colorado',
-					'Connecticut',
-					'Delaware',
-					'Dist. of Columbia',
-					'Florida',
-					'Georgia',
-					'Hawaii',
-					'Idaho',
-					'Illinois',
-					'Indiana',
-					'Iowa',
-					'Kansas',
-					'Kentucky',
-					'Louisana',
-					'Maine',
-					'Maryland',
-					'Massachusetts',
-					'Michigan',
-					'Minnesota',
-					'Mississippi',
-					'Missouri',
-					'Montana',
-					'Nebraska',
-					'Nevada',
-					'New Hampshire',
-					'New Jersey',
-					'New Mexico',
-					'New York',
-					'North Carolina',
-					'North Dakota',
-					'Ohio',
-					'Oklahoma',
-					'Oregon',
-					'Pennsylvania',
-					'Puerto Rico',
-					'Rhode Island',
-					'South Carolina',
-					'South Dakota',
-					'Tennessee',
-					'Texas',
-					'Utah',
-					'Vermont',
-					'Virgin Islands',
-					'Virginia',
-					'Washington',
-					'West Virginia',
-					'Wisconsin',
-					'Wyoming');
-					
-var states = new Array (
-					'al',
-					'ak',
-					'az',
-					'ar',
-					'ca',
-					'co',
-					'ct',
-					'de',
-					'dc',
-					'fl',
-					'ga',
-					'hi',
-					'id',
-					'il',
-					'in',
-					'ia',
-					'ks',
-					'ky',
-					'la',
-					'me',
-					'md',
-					'ma',
-					'mi',
-					'mn',
-					'ms',
-					'mo',
-					'mt',
-					'ne',
-					'nv',
-					'nh',
-					'nj',
-					'nm',
-					'ny',
-					'nc',
-					'nd',
-					'oh',
-					'ok',
-					'or',
-					'pa',
-					'pr',
-					'ri',
-					'sc',
-					'sd',
-					'tn',
-					'tx',
-					'ut',
-					'vt',
-					'vi',
-					'va',
-					'wa',
-					'wv',
-					'wi',
-					'wy');
-
+/*********************************************************
+ * Global constants
+ *********************************************************/
 var lastUpdateTime = 0;
+var lastGraphLoaded;
 var timerId;
+var DISCHARGE = '00060';
+var GAGEHEIGHT = '00065';
 
-if (window.widget) {
-	widget.onshow = onshow;
-	widget.onhide = onhide;
+/**
+ * Print our dynamic form elements, select lists and buttons.
+ * As well, do any additional needed initialization steps.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
+function init() {
+	printStateList();
+	
+	printUpdateOptions();
+	
+	var doneButton = document.getElementById("done");
+    createGenericButton(doneButton, "Done", showFront);
+    
+    if (window.widget) {
+		widget.onshow = onshow;
+		widget.onhide = onhide;
+	}
 }
 
+
+/*********************************************************
+ * Dashboard Open/Close functions
+ *********************************************************/
+
+/**
+ * This method is run every time dashboard is shown. Here we make sure that 
+ * our graph is up to date if it has been a while since dashboard has been shown.
+ * As well, set the next update time if we don't need to update yet.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function onshow () {
 	var now = new Date();
 	if (document.getElementById('stationId').value) {
 		
+		// If it is later than the last planned update, update the graph
 		if (now.getTime() > lastUpdateTime + getUpdateInterval()) {
-			loadDischargeImage();
+			loadGraph();
 		
-		} else {
+		} 
+		// Otherwise, set a timer so that we can update at our needed time.
+		else {
 			var nextUpdateInterval = lastUpdateTime + getUpdateInterval() - now.getTime();
 			setLoadTimerForInterval(nextUpdateInterval);
  		}
 	}
 }
 
+/**
+ * This method is run every time dashboard is closed. Here we make sure to
+ * clear our reload timer so that we do not reload images while dashboard is
+ * hidden.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function onhide () {
 	clearLoadTimer();
 }
 
-function init() {
-	printStateList();
-	printUpdateOptions();
-	var doneButton = document.getElementById("done");
-    createGenericButton(doneButton, "Done", showFront);
-}
 
+/*********************************************************
+ * Refresh timer functions
+ *********************************************************/
+
+/**
+ * Sets a timer to refresh at the standard interval.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function setLoadTimer() {
 	setLoadTimerForInterval(getUpdateInterval());
 }
 
+/**
+ * Sets a timer to refresh at the specified interval
+ * 
+ * @param integer interval Milliseconds till desired refresh.
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function setLoadTimerForInterval ( interval) {
 	clearLoadTimer();
-	timerId = setInterval("loadDischargeImage();", interval);
+	timerId = setInterval("loadGraph();", interval);
 	
 	var nextUpdate = new Date();
 	var now = new Date();
@@ -155,6 +107,14 @@ function setLoadTimerForInterval ( interval) {
 	document.getElementById('nextUpdate').innerHTML = "Next Update: " + nextUpdate.toString();
 }
 
+/**
+ * Clear the timer. We must do this when Dashbord closes so as to not run while
+ * dashboard isn't shown.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function clearLoadTimer() {
 	if (timerId != null) {
 		clearInterval(timerId);
@@ -162,12 +122,26 @@ function clearLoadTimer() {
 	}	
 }
 
+/**
+ * Set the refresh timer to its standard time, but only if it already exists.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
 function resetTimerIfExists () {
 	if (timerId != null) {
 		setLoadTimer();
 	}
 }
 
+/**
+ * Answer the millisecond update interval specified by the user.
+ * 
+ * @return integer
+ * @access public
+ * @since 10/9/05
+ */
 function getUpdateInterval() {
 	if (document.getElementById('updateInterval').value) {
 		var intervalNumber = new Number(document.getElementById('updateInterval').value);
@@ -176,7 +150,21 @@ function getUpdateInterval() {
 		return 1 * 60 * 60 * 1000; // num hours * 60(min) * 60(sec) * 1000(millisec)
 }
 
-function loadDischargeImage() {
+
+/*********************************************************
+ * Graph display functions
+ *********************************************************/
+
+/**
+ * Load/Refresh the graph. If availible a discharge graph (code 00060) is
+ * displayed rather than a gauge-height graph (code 00065) as the discharge is 
+ * generally a better indicator of river behavior.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
+function loadGraph() {
 	var now = new Date();
 	lastUpdateTime = now.getTime();
 	document.getElementById('lastUpdate').innerHTML = "Last Update: " + now.toString();
@@ -186,31 +174,10 @@ function loadDischargeImage() {
 	document.getElementById('stationPageLink').style.visibility = "hidden";
 	document.getElementById('levelsgraph').src = "images/loading_front.png";
 	document.getElementById('levelsgraphThumb').src = "images/loading.png";
-	loadImage("00060");
+	loadGraphGenerationPage(DISCHARGE);
 }
 
-function loadGageHeightImage() {
-	loadImage("00065");
-}
-
-function openPage() {
-	var state = document.getElementById('stateCode').value;
-	if (document.getElementById('stationId').value != null
-		&& document.getElementById('stationId').value != "")
-	{
-		var stationId = document.getElementById('stationId').value;
-		
-		// set the "onclick" of the image to go to the station page
-		var stationPageUrl = "http://waterdata.usgs.gov/" + state + "/nwis/uv/?site_no=" + stationId + "&PARAmeter_cd=00060,00065";
-		if (window.widget) {
-			widget.openURL(stationPageUrl);
-		} else {
-			window.open(stationPageUrl, 'StationPage');
-		}
-	}
-}
-
-function loadImage(parameterCode) {
+function loadGraphGenerationPage(parameterCode) {
 	var state = document.getElementById('stateCode').value;
 	if (document.getElementById('stationId').value != null) {
 		var stationId = document.getElementById('stationId').value;
@@ -246,10 +213,25 @@ function loadImage(parameterCode) {
 			if (req.readyState == 4) {
 				// only if we get a good load should we continue.
 				if (req.status == 200) {
-					placeImage(state, req.responseText);
+					// Hide our error text
+					document.getElementById('loaderror_front').style.visibility = 'hidden';
+					document.getElementById('loaderror_back').style.visibility = 'hidden';
+					
+					// place the graph.
+					// If we can't place the graph, try a gageheight graph
+					if (!placeImage(req.responseText) && parameterCode == DISCHARGE)
+						loadGraphGenerationPage(GAGEHEIGHT);
 				} else {
-					alert("There was a problem retrieving the XML data:\n" +
-						req.statusText);
+					// Show our error text.
+					document.getElementById('loaderror_front').style.visibility = 'visible';
+					document.getElementById('loaderror_back').style.visibility = 'visible';
+					
+					// If we successfully loaded an image previously, keep it around
+					// since its old cached data is better than nothing.
+					if (lastGraphLoaded) {
+						document.getElementById('levelsgraph').src = lastGraphLoaded;
+						document.getElementById('levelsgraphThumb').src = lastGraphLoaded;
+					}
 				}
 			}
 		}
@@ -263,7 +245,7 @@ function loadImage(parameterCode) {
 	}
 }
 
-function placeImage(state, htmlSource) {
+function placeImage(htmlSource) {
 	var regx = new RegExp("<img src=['\"](/nwisweb/data/img/[^'\"]+)['\"]", "i");
 	var text = new String (htmlSource);
 	var matches = text.match(regx);
@@ -274,12 +256,41 @@ function placeImage(state, htmlSource) {
 		// that this is a new image.
 		var now = new Date();
 		var graphUrl = "http://waterdata.usgs.gov" + matches[1] + "?reloadstring=" + now.getTime();
+		lastGraphLoaded = graphUrl;
 		document.getElementById('stationPageLink').style.visibility = "visible";
 		document.getElementById('levelsgraph').src = graphUrl;
 		document.getElementById('levelsgraphThumb').src = graphUrl;
+		
+		return true;
 	} else
-		loadGageHeightImage();
+		return false;
 }
+
+/**
+ * Open the USGS page for the current station.
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
+function openPage() {
+	var state = document.getElementById('stateCode').value;
+	if (document.getElementById('stationId').value != null
+		&& document.getElementById('stationId').value != "")
+	{
+		var stationId = document.getElementById('stationId').value;
+		
+		// set the "onclick" of the image to go to the station page
+		var stationPageUrl = "http://waterdata.usgs.gov/" + state + "/nwis/uv/?site_no=" + stationId + "&PARAmeter_cd=00060,00065";
+		if (window.widget) {
+			widget.openURL(stationPageUrl);
+		} else {
+			window.open(stationPageUrl, 'StationPage');
+		}
+	}
+}
+
+
 
 function printStateList () {
 	var html = "<select id='stateCode' onchange='getStationList();'>\n";
@@ -388,7 +399,7 @@ function populateSiteList(xmlDocument, state) {
 	var sortedNames = names.sort();
 	
 	// Write our select element
-	var html = "<select id='stationId' onchange=\"loadDischargeImage();\">\n";
+	var html = "<select id='stationId' onchange=\"selectStation();\">\n";
 	html += "\t<option value=''>Select Station...</option>\n";
 	for (var i = 0; i < sortedNames.length; i++) {
 			html += "\t<option value='" + ids[sortedNames[i]] + "'>" + sortedNames[i] + "</option>\n";
@@ -396,6 +407,23 @@ function populateSiteList(xmlDocument, state) {
 	html += "</select>\n";
 	document.getElementById('stationList').innerHTML = html;
 }
+
+/**
+ * Select the station
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
+function selectStation () {
+	// unset the old graph's last-loaded images.
+	lastGraphLoaded = null;
+	
+	// load the graph
+	loadGraph();
+}
+
+
 
 Date.prototype.subtractDays = function (num) {
 	// milliseconds since 1/1/1970

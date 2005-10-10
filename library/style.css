@@ -39,6 +39,8 @@ body {
 
 #back {
 	text-align: center;
+	color: #FFF;
+	font-weight: bold;
 	display: none;
 	padding: 10px;
 }
@@ -102,4 +104,31 @@ body {
 #stationPageLink:hover {
 	opacity: 0.2;
 	cursor: pointer;
+}
+
+.error {
+	z-index: 25;
+	
+	color: #E00;
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+	
+	position: absolute;
+	
+	visibility: hidden;
+}
+
+#loaderror_front {
+	top: 5px;
+	left: 60px;
+	height: 20px;
+	width: 310px;
+}
+
+#loaderror_back {
+	top: 60px;
+	left: 7px;
+	height: 100px;
+	width: 100px;
 }
