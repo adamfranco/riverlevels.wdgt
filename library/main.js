@@ -261,15 +261,15 @@ function placeImage(state, htmlSource) {
 	var text = new String (htmlSource);
 	var matches = text.match(regx);
 	
-	// clear the cache of any old versions:
-	for (var i=0; i < document.images.length; i++) {
-		document.images[i] = null;
-	}
-	
 	if (matches) {
+		// In order to get around the widget caching the image, we need a hash
+		// to append to the url that does nothing, but makes the "browser" think
+		// that this is a new image.
+		var now = new Date();
+		var graphUrl = "http://waterdata.usgs.gov" + matches[1] + "?reloadstring=" + now.getTime();
 		document.getElementById('stationPageLink').style.visibility = "visible";
-		document.getElementById('levelsgraph').src = "http://waterdata.usgs.gov/" + matches[1];
-		document.getElementById('levelsgraphThumb').src = "http://waterdata.usgs.gov/" + matches[1];
+		document.getElementById('levelsgraph').src = graphUrl;
+		document.getElementById('levelsgraphThumb').src = graphUrl;
 	} else
 		loadGageHeightImage();
 }
