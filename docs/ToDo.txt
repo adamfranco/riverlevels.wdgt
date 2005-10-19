@@ -1,11 +1,9 @@
 Todo:
 	Flesh out README
 	Nicer icon
-	Preferences to save between restarts.
 	note about not being affiliated with the USGS
 	Website
 	Rearrange back
 	Place error and last image if image url could't be loaded.
 	allow selection of preferred graph
-	Set default time to 1 hour
 	Release

@@ -33,6 +33,8 @@ function init() {
 		var updateInterval = widget.preferenceForKey(createkey("update_interval"));
 		if (updateInterval && updateInterval.length > 0)
 			document.getElementById('updateInterval').value = updateInterval;
+		else
+			document.getElementById('updateInterval').value = 1 * 60 * 60 * 1000;
 			
 		var state = widget.preferenceForKey(createkey("state"));
 		if (state && state.length == 2) {
@@ -46,7 +48,7 @@ function init() {
 	} 
 	// Otherwise, set some nice defaults
 	else {
-// 		document.getElementById('updateInterval').value = 3 * 60 * 60 * 1000;
+		document.getElementById('updateInterval').value = 1 * 60 * 60 * 1000;
 // 		document.getElementById("stateCode").value = "vt";
 // 		getStationList();
 // 		initializeStation("04288000");
