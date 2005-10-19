@@ -15,6 +15,8 @@
  * Globals
  *********************************************************/
 var lastGraphLoaded;
+var currentGraph;
+var currentGraphGenerationHTML;
 var DISCHARGE = '00060';
 var GAGEHEIGHT = '00065';
 
@@ -85,7 +87,7 @@ function loadGraphGenerationPage(parameterCode) {
 		else
 			url += start.getDate();
 				
-		req.onreadystatechange = function () {								
+		req.onreadystatechange = function () {			
 			// only if req shows "loaded"
 			if (req.readyState == 4) {
 				// only if we get a good load should we continue.
@@ -95,7 +97,8 @@ function loadGraphGenerationPage(parameterCode) {
 					document.getElementById('loaderror_back').style.visibility = 'hidden';
 					
 					// place the graph.
-					if (!placeGraph(req.responseText) && parameterCode == DISCHARGE)
+					currentGraphGenerationHTML = req.responseText;
+					if (!placeGraph(0) && parameterCode == DISCHARGE)
 						loadGraphGenerationPage(GAGEHEIGHT);
 				} else {
 					// Show our error text.
@@ -105,8 +108,8 @@ function loadGraphGenerationPage(parameterCode) {
 					// If we successfully loaded an image previously, keep it around
 					// since its old cached data is better than nothing.
 					if (lastGraphLoaded) {
-						document.getElementById('levelsgraph').src = lastGraphLoaded;
-						document.getElementById('levelsgraphThumb').src = lastGraphLoaded;
+						document.getElementById('levelsgraph').src = lastGraphLoaded.src;
+						document.getElementById('levelsgraphThumb').src = lastGraphLoaded.src;
 					}
 				}
 			}
@@ -130,21 +133,52 @@ function loadGraphGenerationPage(parameterCode) {
  * @access public
  * @since 10/9/05
  */
-function placeGraph(htmlSource) {
+function placeGraph(loadAttempt) {
 	var regx = new RegExp("<img src=['\"](/nwisweb/data/img/[^'\"]+)['\"]", "i");
-	var text = new String (htmlSource);
+	var text = new String (currentGraphGenerationHTML);
 	var matches = text.match(regx);
 	
 	if (matches) {
 		// In order to get around the widget caching the image, we need a hash
 		// to append to the url that does nothing, but makes the "browser" think
 		// that this is a new image.
-		var now = new Date();
-		var graphUrl = "http://waterdata.usgs.gov" + matches[1] + "?reloadstring=" + now.getTime();
-		lastGraphLoaded = graphUrl;
-		document.getElementById('stationPageLink').style.visibility = "visible";
-		document.getElementById('levelsgraph').src = graphUrl;
-		document.getElementById('levelsgraphThumb').src = graphUrl;
+		if (loadAttempt == 0) {
+			var now = new Date();
+			var graphUrl = "http://waterdata.usgs.gov" + matches[1] + "?reloadstring=" + now.getTime();
+			currentGraph = new Image();
+			currentGraph.src = graphUrl;
+		}
+				
+		if (currentGraph.complete) {
+			document.getElementById('loaderror_front').style.visibility = 'hidden';
+			document.getElementById('loaderror_back').style.visibility = 'hidden';
+			
+			document.getElementById('stationPageLink').style.visibility = "visible";
+			document.getElementById('levelsgraph').src = currentGraph.src;
+			document.getElementById('levelsgraphThumb').src = currentGraph.src;
+			
+			lastGraphLoaded.src = currentGraph.src;
+		} 
+		
+		else if (loadAttempt < 60) {
+			var regx = new RegExp("/[^\\]*'/");
+			var escapedHTML = text.replace(regx, "\'");
+			var command = "placeGraph(" + (loadAttempt + 1) + ");";
+			window.setTimeout(command, 100);
+		} 
+		
+		else {
+			// Show our error text.
+			document.getElementById('loaderror_front').style.visibility = 'visible';
+			document.getElementById('loaderror_back').style.visibility = 'visible';
+			
+			// If we successfully loaded an image previously, keep it around
+			// since its old cached data is better than nothing.
+			if (lastGraphLoaded) {
+				document.getElementById('levelsgraph').src = lastGraphLoaded.src;
+				document.getElementById('levelsgraphThumb').src = lastGraphLoaded.src;
+			}
+		}
 		
 		return true;
 	} else
