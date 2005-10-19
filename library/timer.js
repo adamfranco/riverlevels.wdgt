@@ -33,11 +33,21 @@ function printUpdateOptions () {
 // 	html += "\t<option value='" + (60 * 1000) + "'>1 min</option>\n";
 // 	html += "\t<option value='" + (2 * 60 * 1000) + "'>2 min</option>\n";
 	html += "\t<option value='" + (30 * 60 * 1000) + "'>30 min</option>\n";
-	for (var i = 1; i < 12; i++) {
+	for (var i = 1; i < 24; i++) {
 		html += "\t<option value='" + (i * 60 * 60 * 1000) + "'>" + i;
 		html += " hour";
 		if (i > 1)
 			html += "s";
+		html += "</option>\n";
+	}
+	for (var i = 24; i <= (3*24); i=i+12) {
+		html += "\t<option value='" + (i * 60 * 60 * 1000) + "'>" + i;
+		html += " hours";
+		html += "</option>\n";
+	}
+	for (var i = 96; i <= (7*24); i=i+24) {
+		html += "\t<option value='" + (i * 60 * 60 * 1000) + "'>" + (i/24);
+		html += " days";
 		html += "</option>\n";
 	}
 	html += "</select>\n";
