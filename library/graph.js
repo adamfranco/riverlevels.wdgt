@@ -164,7 +164,7 @@ function placeGraph(loadAttempt) {
 			var regx = new RegExp("/[^\\]*'/");
 			var escapedHTML = text.replace(regx, "\'");
 			var command = "placeGraph(" + (loadAttempt + 1) + ");";
-			window.setTimeout(command, 100);
+			window.setTimeout(command, 1000);
 		} 
 		
 		else {

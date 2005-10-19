@@ -16,6 +16,34 @@
 var lastUpdateTime = 0;
 var timerId;
 
+
+/*********************************************************
+ * Printing functions
+ *********************************************************/
+
+/**
+ * Print a select list of all of the possible update intervals
+ * 
+ * @return void
+ * @access public
+ * @since 10/9/05
+ */
+function printUpdateOptions () {
+	var html = "<select id='updateInterval' onchange='resetTimerIfExists();'>\n";
+// 	html += "\t<option value='" + (60 * 1000) + "'>1 min</option>\n";
+// 	html += "\t<option value='" + (2 * 60 * 1000) + "'>2 min</option>\n";
+	html += "\t<option value='" + (30 * 60 * 1000) + "'>30 min</option>\n";
+	for (var i = 1; i < 12; i++) {
+		html += "\t<option value='" + (i * 60 * 60 * 1000) + "'>" + i;
+		html += " hour";
+		if (i > 1)
+			html += "s";
+		html += "</option>\n";
+	}
+	html += "</select>\n";
+	document.getElementById('updateIntervalList').innerHTML = html;
+}
+
 /*********************************************************
  * Refresh timer functions
  *********************************************************/
@@ -72,6 +100,12 @@ function clearLoadTimer() {
  * @since 10/9/05
  */
 function resetTimerIfExists () {
+	if (window.widget) {
+		widget.setPreferenceForKey(
+			document.getElementById('updateInterval').value, 
+			createkey("update_interval"));
+	}
+	
 	if (timerId != null) {
 		setLoadTimer();
 	}

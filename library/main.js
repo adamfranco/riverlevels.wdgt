@@ -11,6 +11,9 @@
  */ 
 
 
+/*********************************************************
+ * Widget Open (instantiate) / Close (destroy) functions
+ *********************************************************/
 
 /**
  * Print our dynamic form elements, select lists and buttons.
@@ -21,9 +24,33 @@
  * @since 10/9/05
  */
 function init() {
+
 	printStateList();
-	
 	printUpdateOptions();
+	
+	// Retrieve any stored preferences
+	if (window.widget) {
+		var updateInterval = widget.preferenceForKey(createkey("update_interval"));
+		if (updateInterval && updateInterval.length > 0)
+			document.getElementById('updateInterval').value = updateInterval;
+			
+		var state = widget.preferenceForKey(createkey("state"));
+		if (state && state.length == 2) {
+			document.getElementById("stateCode").value = state;
+			getStationList();
+			
+			var station = widget.preferenceForKey(createkey("station"));
+			if (station && station.length > 0)
+				initializeStation(station);
+		}
+	} 
+	// Otherwise, set some nice defaults
+	else {
+// 		document.getElementById('updateInterval').value = 3 * 60 * 60 * 1000;
+// 		document.getElementById("stateCode").value = "vt";
+// 		getStationList();
+// 		initializeStation("04288000");
+	}
 	
 	var doneButton = document.getElementById("done");
     createGenericButton(doneButton, "Done", showFront);
@@ -31,9 +58,62 @@ function init() {
     if (window.widget) {
 		widget.onshow = onshow;
 		widget.onhide = onhide;
+		widget.onremove = removalHandler;
 	}
 }
 
+/**
+ * Remove our preferences for this widget
+ * 
+ * @param event
+ * @return void
+ * @access public
+ * @since 10/18/05
+ */
+function removalHandler (event) {
+	if (window.widget) {
+		widget.setPreferenceForKey(null, createkey("update_interval"));
+		widget.setPreferenceForKey(null, createkey("state"));
+		widget.setPreferenceForKey(null, createkey("station"));
+	}
+}
+
+
+
+/**
+ * Set the initial value of the station.
+ * 
+ * @param string stationId
+ * @return void
+ * @access public
+ * @since 10/18/05
+ */
+function initializeStation (station) {
+	var stationList = document.getElementById("stationId").options;
+	if (stationList.length > 1) {
+		var stationIndex = findInCollection(station, stationList);
+		if (stationIndex !== false) {
+			document.getElementById("stationId").selectedIndex = stationIndex;
+			selectStation();
+			return;
+		}
+	}
+	
+	window.setTimeout("initializeStation('" + station + "');", 100);
+}
+
+
+/**
+ * Create a key that will only apply to this widget instance.
+ * 
+ * @param string key
+ * @return string
+ * @access public
+ * @since 10/19/05
+ */
+function createkey(key) {
+	return widget.identifier + "-" + key;
+}
 
 /*********************************************************
  * Dashboard Open/Close functions
@@ -140,4 +220,39 @@ Date.prototype.subtractDays = function (num) {
 	// milliseconds since 1/1/1970
 	// current milliseconds - num days * hr * mn * sc * milsc
 	this.setTime(this.getTime() - (num * 24 * 60 * 60 * 1000));
+}
+
+/**
+ * Answer the first key that the value was found at, or false
+ * 
+ * @param mixed value
+ * @return mixed integer or false
+ * @access public
+ * @since 10/18/05
+ */
+Array.prototype.search = function (value) {
+	for (var i = 0; i < this.length; i++) {
+		if (this[i] == value)
+			return i;
+	}
+	
+	return false;
+}
+
+/**
+ * Answer the first key that the value was found at, or false
+ * 
+ * @param mixed value
+ * @param HTMLCollection collection
+ * @return mixed integer or false
+ * @access public
+ * @since 10/18/05
+ */
+function findInCollection (value, collection) {
+	for (var i = 0; i < collection.length; i++) {
+		if (collection[i].value == value)
+			return i;
+	}
+	
+	return false;
 }
