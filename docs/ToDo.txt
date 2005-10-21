@@ -1,6 +1,4 @@
 Todo:
 	Flesh out README
-	Nicer icon
-	note about not being affiliated with the USGS
 	Website
 	allow selection of preferred graph
