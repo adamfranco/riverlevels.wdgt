@@ -70,6 +70,7 @@ body {
 	z-index: 20;
 	font-size: 12px;
 	font-weight: bold;
+	display: none;
 }
 
 #about .pagelink {
