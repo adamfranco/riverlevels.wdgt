@@ -40,6 +40,8 @@ function loadGraph() {
 	
 	setLoadTimer();
 	
+	document.getElementById('about_front').style.display = "none";
+	
 	// Make sure that our refresh button is visible
 	document.getElementById('front_refresh').style.visibility = "visible";
 	document.getElementById('front_refresh').style.background = "url(../images/rot_refresh.gif) no-repeat top left";

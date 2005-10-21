@@ -61,12 +61,26 @@ body {
 	margin-top: 5px;
 }
 
+#about_front {
+	position: absolute;
+	top: 33;
+	left: 0;
+	width: 100%;
+/*	border: 1px solid;*/
+	z-index: 20;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#about .pagelink {
+	width: 140px;
+	left: 120px;
+}
+
 .pagelink {
 	color: #8888ff;
 	text-decoration: underline;
 	position: relative;
-	width: 140px;
-	left: 120px;
 }
 
 .pagelink:hover {
@@ -74,8 +88,20 @@ body {
 	cursor: pointer;
 }
 
+#about_front .pagelink:hover {
+	color: #0000dd;
+}
+
+#about_front .pagelink {
+	color: #4444ff;
+}
+
 .title {
 	font-size: 16px;
+}
+
+#about_front .title {
+	font-size: 40px;
 }
 
 #updateIntervalList {
