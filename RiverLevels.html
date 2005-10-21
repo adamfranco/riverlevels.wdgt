@@ -33,6 +33,8 @@ This is the main HTML file that defines the layout of the widget
 			<div id='graphContainer'>
 				<img id='levelsgraph' src='images/usgs_front.png' width='388px' height='321px'/>
 			</div>
+			<div class='refresh' id='front_refresh' onclick='loadGraph();' onmouseover='enterrefresh(event);' onmouseout='exitrefresh(event);'></div>
+			<div class='refresh' id='refreshrollie'></div>
 			<div class='flip' id='flip' onclick='showBack(event);' onmouseover='enterflip(event);' onmouseout='exitflip(event);'></div>
 			<div class='flip' id='fliprollie'></div>
 		</div>
@@ -44,6 +46,7 @@ This is the main HTML file that defines the layout of the widget
 				</select>
 			</div>
 			<div id='loaderror_back' class='error'>Error refreshing graph. Cached data is displayed.</div>
+			<!--<input type='button' onclick="debug();" value='Alert SRC'>-->
 			<img id='levelsgraphThumb' src='images/usgs.png' width='150px' height='124px'/>
 			<br/><input type='button' id='refresh' value='Refresh' onclick='loadGraph()' disabled='disabled'/>
 			every <div id="updateIntervalList"></div>

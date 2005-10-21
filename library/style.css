@@ -107,6 +107,28 @@ body {
 	z-index: 7999;
 }
 
+.refresh {
+	position:absolute;
+	bottom: 5px;
+	left: 3px;
+	width: 13px;
+	height: 13px;
+}
+
+#front_refresh {
+	visibility: hidden;
+	opacity: 1;
+	background: url(../images/refresh.png) no-repeat top left;
+	z-index:8000;
+}
+
+
+#refreshrollie {
+	visibility: hidden;
+	opacity: 0.3;
+	background: url(file:///System/Library/WidgetResources/ibutton/black_rollie.png) no-repeat top left;
+	z-index: 7999;
+}
 
 #lastUpdate,#nextUpdate {
 	font-size: 9px;

@@ -3,7 +3,8 @@ Todo:
 	Nicer icon
 	note about not being affiliated with the USGS
 	Website
+	Refresh Button on front
 	Rearrange back
 	Place error and last image if image url could't be loaded.
 	allow selection of preferred graph
-	Release
+	links contained under text.

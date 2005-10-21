@@ -173,6 +173,14 @@ function exitflip(event) {
 	document.getElementById('fliprollie').style.visibility = "hidden";
 }
 
+function enterrefresh(event) {
+	document.getElementById('refreshrollie').style.visibility = "visible";
+}
+
+function exitrefresh(event) {
+	document.getElementById('refreshrollie').style.visibility = "hidden";
+}
+
 function showBack(event) {
 	var front = document.getElementById("front");
     var back = document.getElementById("back");
@@ -258,3 +266,54 @@ function findInCollection (value, collection) {
 	
 	return false;
 }
+
+/**
+ * Write some debug info to the console
+ * 
+ * @return void
+ * @access public
+ * @since 10/19/05
+ */
+function debug () {
+	var s = "";
+	s += '\nDebugging RiverLevels:';
+	
+	var lg = document.getElementById('levelsgraph');
+	
+	if (lastGraphLoaded 
+		&& currentGraph.src
+		&& lastGraphLoaded.src == currentGraph.src)
+		s += '\n\tlastGraph == currentGraph';
+	
+	if (currentGraph && lg.src == currentGraph.src)
+		s += '\n\tCurrentGraph in place';
+	
+	if (lastGraphLoaded && lg.src == lastGraphLoaded.src)
+		s += '\n\tLastGraph in place';
+	
+	if (lastGraphLoaded) {
+		s += '\n';
+		s += '\n\tLastGraph:';
+		s += '\n\t\tcomplete:' + lastGraphLoaded.complete;
+		s += '\n\t\tsrc:' + lastGraphLoaded.src;
+	}
+	
+	if (currentGraph) {
+		s += '\n';
+		s += '\n\tCurrentGraph:';
+		s += '\n\t\tcomplete:' + currentGraph.complete;
+		s += '\n\t\tsrc:' + currentGraph.src;
+	}
+	
+	s += '\n';
+	s += '\n\tLevelsGraph:';
+	s += '\n\t\tcomplete:' + lg.complete;
+	s += '\n\t\tsrc:' + lg.src;
+	
+	s += '\n';
+	s += '\n\tcurrentGraphGenerationHTML:';
+	s += '\n--------------------\n' + currentGraphGenerationHTML + '\n--------------------\n';
+	
+	alert(s);
+}
+
