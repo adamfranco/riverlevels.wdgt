@@ -45,7 +45,9 @@ function loadGraph() {
 	document.getElementById('front_refresh').style.background = "url(../images/rot_refresh.gif) no-repeat top left";
 	
 	document.getElementById('stationPageLink').style.visibility = "hidden";
-	document.getElementById('levelsgraph').src = "images/loading_front.png";
+	if (!lastGraphLoaded || !lastGraphLoaded.complete)
+		document.getElementById('levelsgraph').src = "images/loading_front.png";
+	
 	document.getElementById('levelsgraphThumb').src = "images/loading.png";
 	loadGraphGenerationPage(DISCHARGE);
 }
