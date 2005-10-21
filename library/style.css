@@ -58,12 +58,15 @@ body {
 }
 
 #about {
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 .pagelink {
 	color: #8888ff;
 	text-decoration: underline;
+	position: relative;
+	width: 140px;
+	left: 120px;
 }
 
 .pagelink:hover {
