@@ -44,7 +44,7 @@ function loadGraph() {
 	
 	// Make sure that our refresh button is visible
 	document.getElementById('front_refresh').style.visibility = "visible";
-	document.getElementById('front_refresh').style.background = "url(../images/rot_refresh.gif) no-repeat top left";
+	document.getElementById('front_refresh').style.background = "url(images/rot_refresh.gif) no-repeat top left";
 	
 	document.getElementById('stationPageLink').style.visibility = "hidden";
 // 	if (!lastGraphLoaded || !lastGraphLoaded.complete)
@@ -164,7 +164,7 @@ function placeGraph(loadAttempt) {
 			document.getElementById('stationPageLink').style.visibility = "visible";
 			document.getElementById('levelsgraph').src = currentGraph.src;
 			document.getElementById('levelsgraphThumb').src = currentGraph.src;
-			document.getElementById('front_refresh').style.background = "url(../images/refresh.png) no-repeat top left";
+			document.getElementById('front_refresh').style.background = "url(images/refresh.png) no-repeat top left";
 			
 			lastGraphLoaded = new Image();
 			lastGraphLoaded.src = currentGraph.src;
@@ -187,7 +187,7 @@ function placeGraph(loadAttempt) {
 			if (lastGraphLoaded) {
 				document.getElementById('levelsgraph').src = lastGraphLoaded.src;
 				document.getElementById('levelsgraphThumb').src = lastGraphLoaded.src;
-				document.getElementById('front_refresh').style.background = "url(../images/refresh.png) no-repeat top left";
+				document.getElementById('front_refresh').style.background = "url(images/refresh.png) no-repeat top left";
 			}
 		}
 		

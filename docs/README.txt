@@ -16,3 +16,10 @@ Help:		http://sourceforge.net/forum/?group_id=149897
 
 
 Icon:		From http://www.fska.org/fska'sclipart4.htm
+
+
+Changelog:
+
+1.1 (2007-01-08)
+	- Fixed graphs extending off bottom of widget
+	- Fixed invisibility of front refresh icon

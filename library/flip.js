@@ -26,6 +26,7 @@ function mousemove (event)
         animation.duration = 500;
         animation.starttime = starttime;
         animation.firstElement = document.getElementById ('flip');
+        animation.secondElement = document.getElementById ('front_refresh');
         animation.timer = setInterval ("animate();", 13);
         animation.from = animation.now;
         animation.to = 1.0;
@@ -47,6 +48,7 @@ function mouseexit (event)
         animation.duration = 500;
         animation.starttime = starttime;
         animation.firstElement = document.getElementById ('flip');
+        animation.secondElement = document.getElementById ('front_refresh');
         animation.timer = setInterval ("animate();", 13);
         animation.from = animation.now;
         animation.to = 0.0;
@@ -72,6 +74,7 @@ function animate()
         animation.now = computeNextFloat (animation.from, animation.to, ease);
     }
     animation.firstElement.style.opacity = animation.now;
+    animation.secondElement.style.opacity = animation.now;
 }
 function limit_3 (a, b, c)
 {
