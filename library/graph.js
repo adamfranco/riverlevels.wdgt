@@ -215,6 +215,9 @@ function placeGraph(loadAttempt) {
  * @since 2/6/08
  */
 function updateGraphType() {
+	var preferredGraph = document.getElementById('graphType').value
+	widget.setPreferenceForKey(preferredGraph, createkey("graphType"));
+	
 	if (document.getElementById('stationId').value) {
 		loadGraph();
 	}
