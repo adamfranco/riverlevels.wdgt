@@ -19,6 +19,7 @@ var currentGraph;
 var currentGraphGenerationHTML;
 var DISCHARGE = '00060';
 var GAGEHEIGHT = '00065';
+var preferredGraph = DISCHARGE;
 
 /*********************************************************
  * Graph display functions
@@ -51,7 +52,8 @@ function loadGraph() {
 // 		document.getElementById('levelsgraph').src = "images/loading_front.png";
 	
 	document.getElementById('levelsgraphThumb').src = "images/loading.png";
-	loadGraphGenerationPage(DISCHARGE);
+	preferredGraph = document.getElementById('graphType').value;
+	loadGraphGenerationPage(preferredGraph);
 }
 
 /**
@@ -65,6 +67,7 @@ function loadGraph() {
  * @since 10/9/05
  */
 function loadGraphGenerationPage(parameterCode) {
+	alert('Loading Graph: ' + parameterCode);
 	var state = document.getElementById('stateCode').value;
 	if (document.getElementById('stationId').value != null) {
 		var stationId = document.getElementById('stationId').value;
@@ -79,7 +82,7 @@ function loadGraphGenerationPage(parameterCode) {
 		// image url from the resulting page.
 		var req = new XMLHttpRequest();
 		var url = "http://waterdata.usgs.gov/" + state;
-		url += "/nwis/uv/?PARAmeter_cd=" + parameterCode + "&format=img&site_no=";
+		url += "/nwis/uv/?PARAmeter_cd=" + parameterCode + "&format=img_default&site_no=";
 		url += stationId;
 		url += "&set_logscale_y=1&begin_date=";
 		var start = new Date();
@@ -106,8 +109,15 @@ function loadGraphGenerationPage(parameterCode) {
 					
 					// place the graph.
 					currentGraphGenerationHTML = req.responseText;
-					if (!placeGraph(0) && parameterCode == DISCHARGE)
-						loadGraphGenerationPage(GAGEHEIGHT);
+					if (!placeGraph(0)) {
+						markGraphTypeMissing(parameterCode);
+						if (parameterCode == preferredGraph) {
+							if (preferredGraph == DISCHARGE)
+								loadGraphGenerationPage(GAGEHEIGHT);
+							else
+								loadGraphGenerationPage(DISCHARGE);
+						}
+					}
 				} else {
 					// Show our error text.
 					document.getElementById('loaderror_front').style.visibility = 'visible';
@@ -171,8 +181,9 @@ function placeGraph(loadAttempt) {
 		} 
 		
 		else if (loadAttempt < 60) {
-			var regx = new RegExp("/[^\\]*'/");
-			var escapedHTML = text.replace(regx, "\'");
+//			var regx = /([^\\])\\'/;
+//			var escapedHTML = text.replace(regx, "\1\'");
+//			alert(escapedHTML);
 			var command = "placeGraph(" + (loadAttempt + 1) + ");";
 			window.setTimeout(command, 1000);
 		} 
@@ -181,7 +192,7 @@ function placeGraph(loadAttempt) {
 			// Show our error text.
 			document.getElementById('loaderror_front').style.visibility = 'visible';
 			document.getElementById('loaderror_back').style.visibility = 'visible';
-			
+
 			// If we successfully loaded an image previously, keep it around
 			// since its old cached data is better than nothing.
 			if (lastGraphLoaded) {
@@ -194,4 +205,52 @@ function placeGraph(loadAttempt) {
 		return true;
 	} else
 		return false;
+}
+
+/**
+ * The graph type has been changed, update the graph.
+ * 
+ * @return void
+ * @access public
+ * @since 2/6/08
+ */
+function updateGraphType() {
+	if (document.getElementById('stationId').value) {
+		loadGraph();
+	}
+}
+
+/**
+ * Mark a graph type as not found
+ * 
+ * @param string type
+ * @return void
+ * @access public
+ * @since 2/6/08
+ */
+function markGraphTypeMissing( type ) {
+	var select = document.getElementById('graphType');
+	for (var i = 0; i < select.options.length; i++) {
+		var option = select.options.item(i);
+		if (option.value == type)
+			option.disabled = 'disabled';
+		else
+			option.selected = 'selected';
+	}
+}
+
+/**
+ * Clear Disabled graph types when selecting a new station
+ * 
+ * @param string type
+ * @return void
+ * @access public
+ * @since 2/6/08
+ */
+function clearMissingGraphTypes( ) {
+	var select = document.getElementById('graphType');
+	for (var i = 0; i < select.options.length; i++) {
+		var option = select.options.item(i);
+		option.disabled = null;
+	}
 }

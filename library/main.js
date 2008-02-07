@@ -35,7 +35,10 @@ function init() {
 			document.getElementById('updateInterval').value = updateInterval;
 		else
 			document.getElementById('updateInterval').value = 1 * 60 * 60 * 1000;
-			
+		
+		var preferredGraph = widget.preferenceForKey(createkey("graphType"));	
+		document.getElementById("graphType").value = preferredGraph;
+		
 		var state = widget.preferenceForKey(createkey("state"));
 		if (state && state.length == 2) {
 			document.getElementById("stateCode").value = state;
@@ -77,6 +80,7 @@ function removalHandler (event) {
 		widget.setPreferenceForKey(null, createkey("update_interval"));
 		widget.setPreferenceForKey(null, createkey("state"));
 		widget.setPreferenceForKey(null, createkey("station"));
+		widget.setPreferenceForKey(null, createkey("graphType"));
 	}
 }
 

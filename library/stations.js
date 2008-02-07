@@ -151,6 +151,8 @@ function selectStation () {
 	// unset the old graph's last-loaded images.
 	lastGraphLoaded = null;
 	
+	clearMissingGraphTypes();
+	
 	// load the graph
 	loadGraph();
 	
