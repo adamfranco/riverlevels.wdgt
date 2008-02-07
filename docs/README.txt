@@ -20,6 +20,10 @@ Icon:		From http://www.fska.org/fska'sclipart4.htm
 
 Changelog:
 
+1.2 (2007-01-08)
+	- Fixed Leopard (10.5) compatability bug.
+	- Added the ability to choose Gauge Height (ft) in addition to discharge (CFS).
+
 1.1 (2007-01-08)
 	- Fixed graphs extending off bottom of widget
 	- Fixed invisibility of front refresh icon
