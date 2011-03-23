@@ -11,9 +11,9 @@
 	<key>CFBundleDisplayName</key>
 	<string>River Levels</string>
 	<key>CFBundleVersion</key>
-	<string>1.2</string>
+	<string>1.2.2</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2005-2008 Adam Franco, provided under the GNU General Public License (GPL). See RiverLevels.wdgt/docs/LICENSE.txt for details.</string>
+	<string>Copyright 2005-2011 Adam Franco, provided under the GNU General Public License (GPL). See RiverLevels.wdgt/docs/LICENSE.txt for details.</string>
 	
 	<key>MainHTML</key>
 	<string>RiverLevels.html</string>
