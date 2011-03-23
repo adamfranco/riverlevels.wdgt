@@ -152,7 +152,7 @@ function loadGraphGenerationPage(parameterCode) {
  * @since 10/9/05
  */
 function placeGraph(loadAttempt) {
-	var regx = new RegExp("<img src=['\"](/nwisweb/data/img/[^'\"]+)['\"]", "i");
+	var regx = new RegExp("<img src=['\"]([^'\"]*)(/nwisweb/data/img/[^'\"]+)['\"]", "i");
 	var text = new String (currentGraphGenerationHTML);
 	var matches = text.match(regx);
 	
@@ -162,7 +162,11 @@ function placeGraph(loadAttempt) {
 		// that this is a new image.
 		if (loadAttempt == 0) {
 			var now = new Date();
-			var graphUrl = "http://waterdata.usgs.gov" + matches[1] + "?reloadstring=" + now.getTime();
+			if (matches[1].length) {
+				var graphUrl = matches[1] + matches[2] + "?reloadstring=" + now.getTime();
+			} else {
+				var graphUrl = "http://waterdata.usgs.gov" + matches[2] + "?reloadstring=" + now.getTime();
+			}
 			currentGraph = new Image();
 			currentGraph.src = graphUrl;
 		}
